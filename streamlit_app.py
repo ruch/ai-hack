@@ -1,11 +1,11 @@
 import streamlit as st
 import openai
-import os
+#import os
 
 
 
 # Set your OpenAI API key here
-openai.api_key = os.environ['OPENAI_API_KEY']
+#openai.api_key = os.environ['OPENAI_API_KEY']
 
 def generate_learning_material(topic, available_time):
     prompt = f"Explain {topic} that a 15-year-old can understand in {available_time} minutes. Only focus on the most important points. Breakout the text in suitable paragraphs."
