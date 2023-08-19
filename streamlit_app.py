@@ -1,6 +1,18 @@
 import streamlit as st
 import openai
+# Set your OpenAI API key here
 
+
+def newsplit(lines):
+# Splitting the text into lines based on newline character
+
+# Removing empty lines and extracting topics
+    split_list = [element.split('- ') for element in lines]
+    # topics = [line.strip('- ') for line in lines if line.strip('- ')]
+    # for topic in topics:
+        # print("- " + topic)
+    for line in lines:
+        st.write(line + "\n")
 
 def generate_learning_material(topic, available_time):
     system_message = "You are a teacher who breaks down complex or difficult topics into simple and easy to understand learning material for 15-year-olds. Only focus on the most important points. Breakout the text in suitable paragraphs. Mark the end of content with ## Then suggest three adjacent topics that the student can learn next. Separate the topics with a comma." 
@@ -33,7 +45,6 @@ def main():
 
     if selected_topic:
         full_response = generate_learning_material(selected_topic, available_time)
-        #print(full_response)
         #st.write(full_response)
         lines = full_response.split("##")
         #st.write(lines)
@@ -42,10 +53,9 @@ def main():
 
         st.subheader(f"Learning Material for '{selected_topic}' ({available_time} minutes):")
         st.write(learning_material)
-
-        st.button("What to continue learning?") 
-        if st.button:
-            st.write(f"'{adjacent_topics}'")
+        st.header("What to continue learning?")
+        split_topics= newsplit(adjacent_topics)
+            #st.write(adjacent_topics)
 
 
 if __name__ == "__main__":
