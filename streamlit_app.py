@@ -23,7 +23,7 @@ def generate_learning_material(topic, available_time):
 
 def main():
     st.title("Learning Platform on the go")
-    st.write("How much time you have?")
+    #st.write("How much time you have?")
     #st.write("What do you want to learn?")
 
     available_time = st.slider("Select time you have to learn (minutes)", min_value=10, max_value=120, value=5, step=5)
