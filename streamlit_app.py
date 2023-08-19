@@ -1,9 +1,9 @@
 import streamlit as st
 import openai
-# Set your OpenAI API key here
+
 
 def generate_learning_material(topic, available_time):
-    system_message = "You are a teacher who breaks down complex or difficult topics into simple and easy to understand learning material for 15-year-olds. Only focus on the most important points. Breakout the text in suitable paragraphs."
+    system_message = "You are a teacher who breaks down complex or difficult topics into simple and easy to understand learning material for 15-year-olds. Only focus on the most important points. Breakout the text in suitable paragraphs. Mark the end of content with ## Then suggest three adjacent topics that the student can learn next. Separate the topics with a comma." 
     user_message = f"Generate a brief learning material about {topic} that I can understand in {available_time} minutes."
 
     lconversation = [
@@ -19,22 +19,33 @@ def generate_learning_material(topic, available_time):
         temperature=0.4  # Adjust the temperature for response randomness
     )
 
+    # Extract adjacent topics from the response
+
     return response.choices[0].text.strip()
 
 def main():
     st.title("Learning Platform on the go")
-    #st.write("How much time you have?")
+    # st.write("How much time you have?")
     #st.write("What do you want to learn?")
 
     available_time = st.slider("Select time you have to learn (minutes)", min_value=10, max_value=120, value=5, step=5)
     selected_topic = st.text_input("What do you want to learn?")
 
     if selected_topic:
-        learning_material = generate_learning_material(selected_topic, available_time)
+        full_response = generate_learning_material(selected_topic, available_time)
+        #print(full_response)
+        #st.write(full_response)
+        lines = full_response.split("##")
+        #st.write(lines)
+        learning_material = lines[0]
+        adjacent_topics = lines[1:]
+
         st.subheader(f"Learning Material for '{selected_topic}' ({available_time} minutes):")
         st.write(learning_material)
 
-st.button("What to continue learning?") 
+        st.button("What to continue learning?") 
+        if st.button:
+            st.write(f"'{adjacent_topics}'")
 
 
 if __name__ == "__main__":
